@@ -3,15 +3,15 @@ package com.template;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.reactnativecommunity.netinfo.NetInfoPackage;
-import com.BV.LinearGradient.LinearGradientPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
+import com.geektime.rnonesignalandroid.ReactNativeOneSignalPackage;
+import com.BV.LinearGradient.LinearGradientPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
+import com.reactnativecommunity.netinfo.NetInfoPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
-import com.facebook.react.modules.storage.ReactDatabaseSupplier;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,10 +28,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new NetInfoPackage(),
-            new LinearGradientPackage(),
             new VectorIconsPackage(),
-            new RNGestureHandlerPackage()
+            new ReactNativeOneSignalPackage(),
+            new LinearGradientPackage(),
+            new RNGestureHandlerPackage(),
+            new NetInfoPackage()
       );
     }
 
@@ -50,7 +51,5 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
-    long size = 999L * 1024L * 1024L; // 50 MB 
-    com.facebook.react.modules.storage.ReactDatabaseSupplier.getInstance(getApplicationContext()).setMaximumSize(size);
   }
 }

@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { AsyncStorage, View, StyleSheet, StatusBar, Image, ActivityIndicator } from 'react-native';
 import { sh, sw } from '../helpers/dimensions'
+import OneSignal from 'react-native-onesignal'
 
 export default class SplashScreen extends Component {
     constructor(props){
         super(props)
+        OneSignal.init("e1372e31-e5c1-45a4-8658-c089346fa696");
+
+        OneSignal.addEventListener('received', this.onReceived);
+        OneSignal.addEventListener('opened', this.onOpened);
+        OneSignal.addEventListener('ids', this.onIds);
 
         this.state = {
             email: null,
@@ -13,6 +19,7 @@ export default class SplashScreen extends Component {
     }
 
     async componentDidMount() {
+
         StatusBar.setHidden(true);
         await this.loadSession();
 
@@ -33,7 +40,31 @@ export default class SplashScreen extends Component {
 
     async componentWillMount() {
         await AsyncStorage.setItem('version', 'Versão 1.0.0');
+
+        // OneSignal.init("e1372e31-e5c1-45a4-8658-c089346fa696");
+        // OneSignal.addEventListener('received', this.receivedPush);
+        // OneSignal.addEventListener('opened', this.openedPush);
+        // OneSignal.addEventListener('ids', this.idsPush);
     }
+
+    componentWillUnmount() {
+        OneSignal.removeEventListener('received', this.receivedPush);
+        OneSignal.removeEventListener('opened', this.openedPush);
+        OneSignal.removeEventListener('ids', this.idsPush);
+    }
+
+    receivedPush(push) {
+        alert(push)
+    }
+
+    openedPush(push) {
+        alert(push)
+    }
+
+    idsPush(push) {
+        alert(push)
+    }
+
 
     wait = (ms) => {
         var start = new Date().getTime();
